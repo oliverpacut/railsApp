@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
-  get 'pages/home'
+#  get 'home' 	=> 'pages#home'
 
-  get 'pages/help'
+  get 'help' 	=> 'pages#help'
 
-  get 'pages/about'
+  get 'about'	=> 'pages#about'
+
+  get 'contact'	=> 'pages#contact'
+
+  get 'signup'	=> 'profiles#new'
 
   resources :posts
   resources :profiles
