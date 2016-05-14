@@ -27,6 +27,7 @@ class ProfilesController < ApplicationController
   def create
     @profile = Profile.new(profile_params)
     if @profile.save
+      log_in @profile
       flash[:success] = "Welcome to our application!"
       redirect_to @profile
     else

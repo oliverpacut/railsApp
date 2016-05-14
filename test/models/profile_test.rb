@@ -53,6 +53,10 @@ class ProfileTest < ActiveSupport::TestCase
     @profile.password = @profile.password_confirmation = "a" * 5
     assert_not @profile.valid?
   end
+
+  test "authenticated? should return false for a user with nil digest" do
+    assert_not @profile.authenticated?('')
+  end
   # test "the truth" do
   #   assert true
   # end
