@@ -12,6 +12,10 @@ module SessionsHelper
     cookies.permanent[:remember_token] = profile.remember_token
   end
 
+  def current_profile?(profile)
+    profile == current_profile
+  end
+
   # Returns the current logged-in user (if any).
   def current_profile
     if (profile_id = session[:profile_id])
@@ -39,5 +43,16 @@ module SessionsHelper
   def log_out
     session.delete(:profile_id)
     @current_profile = nil
+  end
+
+  # Redirects to stored location (or to the default).
+  def redirect_back_or(default)
+    redirect_to(session[:forwarding_url] || default)
+    session.delete(:forwarding_url)
+  end
+
+  # Stores the URL trying to be accessed.
+  def store_location
+    session[:forwarding_url] = request.url if request.get?
   end
 end

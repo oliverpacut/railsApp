@@ -21,7 +21,7 @@ class ProfileTest < ActiveSupport::TestCase
   end
 
   test "name should not be too long" do
-    @profile.name = "a"*21
+    @profile.name = "a"*51
     assert_not @profile.valid?
   end
 

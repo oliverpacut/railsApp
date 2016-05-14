@@ -1,0 +1,8 @@
+<li>
+  <%= gravatar_for profile, size: 52 %>
+  <%= link_to profile.name, profile %>
+  <% if current_profile.admin? && !current_profile?(profile) %>
+    | <%= link_to "delete", profile, method: :delete,
+				     data: { confirm: "You sure?" } %>
+  <% end %>
+</li>
