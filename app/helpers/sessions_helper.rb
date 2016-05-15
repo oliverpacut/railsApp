@@ -22,7 +22,7 @@ module SessionsHelper
       @current_profile ||= Profile.find_by(id: profile_id)
     elsif (profile_id = cookies.signed[:profile_id])
       profile = Profile.find_by(id: profile_id)
-      if profile && profile.authenticated?(cookies[:remember_token])
+      if profile && profile.authenticated?(:remember, cookies[:remember_token])
         log_in profile
         @current_profile = profile
       end

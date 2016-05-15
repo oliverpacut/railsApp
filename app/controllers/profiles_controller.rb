@@ -31,9 +31,10 @@ class ProfilesController < ApplicationController
   def create
     @profile = Profile.new(profile_params)
     if @profile.save
-      log_in @profile
-      flash[:success] = "Welcome to our application!"
-      redirect_to @profile
+      @profile.send_activation_email
+      #ProfileMailer.account_activation(@profile).deliver_now
+      flash[:info] = "Check your email to activate your account."
+      redirect_to root_url
     else
       render 'new'
     end

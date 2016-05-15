@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ProfileTest < ActiveSupport::TestCase
   def setup
-    @profile = Profile.new(name: "Jane Doe", email: "bestJane@example.com",
+    @profile = Profile.new(name: "Example User", email: "user@example.com",
 			   password: "foobar", password_confirmation: "foobar")
   end
 
@@ -55,7 +55,7 @@ class ProfileTest < ActiveSupport::TestCase
   end
 
   test "authenticated? should return false for a user with nil digest" do
-    assert_not @profile.authenticated?('')
+    assert_not @profile.authenticated?(:remember, '')
   end
   # test "the truth" do
   #   assert true

@@ -7,11 +7,17 @@ class SessionsController < ApplicationController
     profile = Profile.find_by(email: params[:session][:email].downcase)
     if profile && profile.authenticate(params[:session][:password])
       #
-      log_in profile
-      params[:session][:remember_me] == '1' ? remember(profile) : forget(profile)
-      redirect_back_or profile
+      if profile.activated?
+        log_in profile
+        params[:session][:remember_me] == '1' ? remember(profile) : forget(profile)
+        redirect_back_or profile
+      else
+        message  = "Account not activated. "
+        message += "Check your email for the activation link."
+        flash[:warning] = message
+        redirect_to root_url
+      end
     else
-      #
       flash.now[:danger] = 'Invalid email/password combination'
       render 'new'
     end
