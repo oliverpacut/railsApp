@@ -57,7 +57,12 @@ class ProfileTest < ActiveSupport::TestCase
   test "authenticated? should return false for a user with nil digest" do
     assert_not @profile.authenticated?(:remember, '')
   end
-  # test "the truth" do
-  #   assert true
-  # end
+  
+  test "associated posts should be destroyed" do
+    @profile.save
+    @profile.posts.create!(content: "Lorem ipsum")
+    assert_difference 'Post.count', -1 do
+      @profile.destroy
+    end
+  end
 end

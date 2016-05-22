@@ -3,7 +3,7 @@ class Profile < ActiveRecord::Base
   before_save   :downcase_email
   before_create :create_activation_digest
 
-  has_many :posts
+  has_many :posts, dependent: :destroy
   VALID_EMAIL_REGEX = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
   validates :email, presence: true, length: { maximum: 255 },
 		    format: { with: VALID_EMAIL_REGEX },
@@ -61,6 +61,10 @@ class Profile < ActiveRecord::Base
 
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
+  end
+
+  def feed
+    Post.where("profile_id = ?", id)
   end
 
   private

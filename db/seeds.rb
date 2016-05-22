@@ -24,3 +24,9 @@ Profile.create!(name:  "Example Profile",
 	       activated: true,
 	       activated_at: Time.zone.now)
 end
+
+profiles = Profile.order(:created_at).take(6)
+50.times do
+  content = Faker::Lorem.sentence(5)
+  profiles.each { |profile| profile.posts.create!(content: content) }
+end

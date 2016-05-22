@@ -14,6 +14,7 @@ class ProfilesController < ApplicationController
   # GET /profiles/1.json
   def show
     @profile = Profile.find(params[:id])
+    @posts = @profile.posts.paginate(page: params[:page])
   end
 
   # GET /profiles/new
