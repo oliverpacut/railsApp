@@ -30,3 +30,10 @@ profiles = Profile.order(:created_at).take(6)
   content = Faker::Lorem.sentence(5)
   profiles.each { |profile| profile.posts.create!(content: content) }
 end
+
+profiles = Profile.all
+profile = profiles.first
+following = profiles[2..50]
+followers = profiles[3..40]
+following.each { |followed| profile.follow(followed) }
+followers.each { |follower| follower.follow(profile) }

@@ -1,5 +1,6 @@
 class ProfilesController < ApplicationController
-  before_action :logged_in_profile,  only: [:index, :edit, :update, :destroy]
+  before_action :logged_in_profile,  only: [:index, :edit, :update, :destroy,
+					    :following, :followers]
   before_action :correct_profile,    only: [:edit, :update]
   before_action :admin_profile,	     only: :destroy
   #before_action :set_profile, only: [:show, :edit, :update, :destroy]
@@ -72,6 +73,20 @@ class ProfilesController < ApplicationController
   def correct_profile
     @profile = Profile.find(params[:id])
     redirect_to(root_url) unless @profile == current_profile
+  end
+
+  def following
+    @title = "Following"
+    @profile = Profile.find(params[:id])
+    @profiles = @profile.following.paginate(page: params[:page])
+    render 'show_follow'
+  end
+
+  def followers
+    @title = "Followers"
+    @profile = Profile.find(params[:id])
+    @profiles = @profile.followers.paginate(page: params[:page])
+    render 'show_follow'
   end
 
   private
