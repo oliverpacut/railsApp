@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
-<% provide(:title,@profile.name) %>
+<% provide(:title, @profile.name) %>
 <div class="row">
   <aside class="col-md-4">
-    <section class="profile_info">
+    <section> <!-- class="profile_info"> -->
       <h1>
         <%= gravatar_for @profile %>
         <%= @profile.name %>
